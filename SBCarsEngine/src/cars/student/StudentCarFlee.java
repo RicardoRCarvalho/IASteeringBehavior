@@ -6,14 +6,13 @@ import cars.engine.World;
 
 import java.awt.*;
 
-import static cars.engine.Vector2.multiply;
 import static cars.engine.Vector2.vec2;
 
-public class StudentCar extends Car {
-    public StudentCar() {
+public class StudentCarFlee extends Car {
+    public StudentCarFlee() {
         super(settings ->
           settings
-            .color(Color.BLUE)
+            .color(Color.GREEN)
             .randomOrientation()
         );
     }
@@ -70,11 +69,6 @@ public class StudentCar extends Car {
     }
     @Override
     public Vector2 calculateSteering(final World world) {
-        Vector2 seekVector = seek(world, 1);
-        Vector2 fleeVector = flee(world, 1);
-
-        Vector2 movement = Vector2.add(seekVector, fleeVector).normalize();
-        System.out.println("Seek:  " + seekVector + "\nFlee: " + fleeVector + "\nTotal: " + movement);
-        return Vector2.multiply(movement, 100);
+        return flee(world, 1);
     }
 }

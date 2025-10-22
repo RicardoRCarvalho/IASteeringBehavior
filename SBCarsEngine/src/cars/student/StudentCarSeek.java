@@ -6,14 +6,13 @@ import cars.engine.World;
 
 import java.awt.*;
 
-import static cars.engine.Vector2.multiply;
 import static cars.engine.Vector2.vec2;
 
-public class StudentCar extends Car {
-    public StudentCar() {
+public class StudentCarSeek extends Car {
+    public StudentCarSeek() {
         super(settings ->
           settings
-            .color(Color.BLUE)
+            .color(Color.RED)
             .randomOrientation()
         );
     }
@@ -40,7 +39,7 @@ public class StudentCar extends Car {
     public Vector2 seek(final World world, double weight){
         double Sx = getPosition().x;
         double Sy = getPosition().y;
-        Vector2 Sf = world.getClickPos();
+        Vector2 Sf = world.getMousePos();
 
         if (Sf != null) {
             Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
@@ -70,11 +69,6 @@ public class StudentCar extends Car {
     }
     @Override
     public Vector2 calculateSteering(final World world) {
-        Vector2 seekVector = seek(world, 1);
-        Vector2 fleeVector = flee(world, 1);
-
-        Vector2 movement = Vector2.add(seekVector, fleeVector).normalize();
-        System.out.println("Seek:  " + seekVector + "\nFlee: " + fleeVector + "\nTotal: " + movement);
-        return Vector2.multiply(movement, 100);
+        return seek(world, 1);
     }
 }
