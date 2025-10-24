@@ -70,11 +70,11 @@ public class StudentCar extends Car {
     }
     @Override
     public Vector2 calculateSteering(final World world) {
-        Vector2 seekVector = seek(world, 1);
-        Vector2 fleeVector = flee(world, 1);
+        Vector2 seekVector = seek(world, 1.6);
+        Vector2 fleeVector = flee(world, 0.6);
 
-        Vector2 movement = Vector2.add(seekVector, fleeVector).normalize();
+        Vector2 movement = Vector2.add(seekVector, fleeVector);
         System.out.println("Seek:  " + seekVector + "\nFlee: " + fleeVector + "\nTotal: " + movement);
-        return Vector2.multiply(movement, 100);
+        return Vector2.multiply(movement, 1);
     }
 }
