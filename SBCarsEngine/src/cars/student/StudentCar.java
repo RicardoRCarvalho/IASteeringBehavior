@@ -3,46 +3,77 @@ package cars.student;
 import cars.engine.Car;
 import cars.engine.Vector2;
 import cars.engine.World;
+import java.util.Random;
 
 import java.awt.*;
 
-import static cars.engine.Vector2.multiply;
 import static cars.engine.Vector2.vec2;
 
 public class StudentCar extends Car {
     public StudentCar() {
         super(settings ->
-          settings
-            .color(Color.BLUE)
-            .randomOrientation()
+                settings
+                        .color(Color.BLUE)
+                        .randomOrientation()
+
         );
+
+    }
+    boolean EnteredSeek = false;
+    boolean distanceSetUp = false;
+    double StartDistance;
+    double distance;
+    double Sx = getPosition().x;
+    double Sy = getPosition().y;
+
+    public Vector2 RandomCoordinates() {
+
+
+        Random random = new Random();
+
+        int minX = -300;
+        int maxX = 300;
+        int minY = -300;
+        int maxY = 300;
+
+        Vector2 randomized = new Vector2(random.nextInt(maxX - minX + 1) + minX,random.nextInt(maxY - minY + 1) + minY);
+
+        return randomized;
+
     }
 
 
-    /**
-     * Deve calcular o steering behavior para esse carro
-     * O parametro world contem diversos metodos utilitários:
-     * world.getClickPos(): Retorna um vector2D com a posição do último click,
-     * ou nulo se nenhum click foi dado ainda
-     * - world.getMousePos(): Retorna um vector2D com a posição do cursor do mouse
-     * - world.getNeighbors(): Retorna os carros vizinhos. Não inclui o próprio carro.
-     * Opcionalmente, você pode passar o raio da vizinhança. Se o raio não for
-     * fornecido retornará os demais carros.
-     * - world.getSecs(): Indica quantos segundos transcorreram desde o último quadro
-     * Você ainda poderá chamar os seguintes metodos do carro para obter informações:
-     * - getDirection(): Retorna um vetor unitário com a direção do veículo
-     * - getPosition(): Retorna um vetor com a posição do carro
-     * - getMass(): Retorna a massa do carro
-     * - getMaxSpeed(): Retorna a velocidade de deslocamento maxima do carro em píxeis / s
-     * - getMaxForce(): Retorna a forca maxima que pode ser aplicada sobre o carro
-     */
+
 
     public Vector2 seek(final World world, double weight){
-        double Sx = getPosition().x;
-        double Sy = getPosition().y;
+        System.out.println("seek");
+        Sx = getPosition().x;
+        Sy = getPosition().y;
+        if (EnteredSeek){
+            StartDistance=distance;
+            EnteredSeek=false;
+        }
+
         Vector2 Sf = world.getClickPos();
 
         if (Sf != null) {
+            double dx = Sf.x - Sx;
+            double dy = Sf.y - Sy;
+            distance = (double) Math.sqrt(dx * dx + dy * dy);
+            if (!distanceSetUp){
+                StartDistance=distance;
+                distanceSetUp=true;
+            }
+
+            if (distance<= StartDistance/2){
+                state =2;
+            }
+            if (distance < 10.0f) {
+
+                distanceSetUp=false;
+                return null;
+
+            }
             Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
             acel.x *= -1;
             acel.y *=-1;
@@ -53,9 +84,49 @@ public class StudentCar extends Car {
             return vec2();
         }
     }
+    public Vector2 arrive(final World world, double weight) {
+
+        Sx = getPosition().x;
+        Sy = getPosition().y;
+        Vector2 Sf = world.getClickPos();
+        EnteredSeek=true;
+
+        if (Sf != null) {
+            System.out.println(world.getClickPos());
+            System.out.println("SF"+Sf);
+            double dx = Sf.x - Sx;
+            double dy = Sf.y - Sy;
+            distance = (double) Math.sqrt(dx * dx + dy * dy);
+
+            Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
+
+            if (StartDistance!=distance){
+                state = 5;
+            }
+
+            if (world.getClickPos() != Sf){
+
+                System.out.println("Change");
+            }
+            if (distance<= StartDistance/10 ) {
+
+                state = 5;
+
+                return null;
+
+            }
+
+
+            return new Vector2(getDirection().x*-getSpeed()*(distance/100),getDirection().y*-getSpeed()*(distance/100));
+
+
+        } else {
+            return new Vector2(0, 0);
+        }
+    }
     public Vector2 flee(final World world, double weight){
-        double Sx = getPosition().x;
-        double Sy = getPosition().y;
+        Sx = getPosition().x;
+        Sy = getPosition().y;
         Vector2 Sf = world.getMousePos();
 
         if (Sf != null && Vector2.distance(Sf, getPosition()) > 100) {
@@ -68,13 +139,96 @@ public class StudentCar extends Car {
             return vec2(0.0, 0.0);
         }
     }
+    public Vector2 wander(final World world, double weight){
+        Sx = getPosition().x;
+        Sy = getPosition().y;
+        Vector2 Sf = RandomCoordinates();
+
+        if (Sf != null) {
+            Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
+            acel.x *= -1;
+            acel.y *=-1;
+            Vector2 finalVector = Vector2.multiply(acel, weight);
+            return finalVector;
+        }
+        else {
+            return vec2();
+        }
+    }
+    public Vector2 avoid(final World world, double weight, double mult){
+
+        Sx = getPosition().x;
+        Sy = getPosition().y;
+        Vector2 obstaclePosition = new Vector2(100,100);
+        Vector2 dodge;
+
+        Vector2 Sf = world.getClickPos();
+
+        if (Sf != null) {
+
+            Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
+
+            double dx = Sf.x - Sx;
+            double dy = Sf.y - Sy;
+            distance = (double) Math.sqrt(dx * dx + dy * dy);
+
+            dodge = new Vector2(Sx - obstaclePosition.x, Sy - obstaclePosition.y);
+            double obstacleDistancex = obstaclePosition.x - Sx;
+            double obstacleDistancey = obstaclePosition.y - Sy;
+            double obstacleDistance = (double) Math.sqrt(obstacleDistancex * obstacleDistancex + obstacleDistancey * obstacleDistancey);
+            System.out.println(obstacleDistance);
+            if (distance <= 10) {
+                return null;
+            }
+            if (obstacleDistance <100){
+                dodge = Vector2.multiply(dodge,mult);
+                dodge = Vector2.add(dodge,acel);
+                Vector2 finalVector = Vector2.multiply(dodge, weight);
+                return finalVector;
+            }
+            if (!distanceSetUp){
+                StartDistance=distance;
+                distanceSetUp=true;
+            }
+
+            if (distance<= StartDistance/1.5){
+                state =2;
+            }
+
+
+
+
+            acel.x *= -1;
+            acel.y *=-1;
+            Vector2 finalVector = Vector2.multiply(acel, weight);
+            return finalVector;
+        }
+        else {
+            return vec2();
+        }
+
+    }
+
+    int state = 5;
     @Override
     public Vector2 calculateSteering(final World world) {
-        Vector2 seekVector = seek(world, 1.6);
-        Vector2 fleeVector = flee(world, 0.6);
 
-        Vector2 movement = Vector2.add(seekVector, fleeVector);
-        System.out.println("Seek:  " + seekVector + "\nFlee: " + fleeVector + "\nTotal: " + movement);
-        return Vector2.multiply(movement, 1);
+        switch(state){
+            case 1:
+                return seek(world, 1);
+
+            case 2:
+                return arrive(world, 1);
+
+            case 3:
+                return wander(world,1);
+            case 4:
+                return flee(world,1);
+            case 5:
+                return avoid(world,1,500);
+        }
+
+        return null;
     }
 }
+
