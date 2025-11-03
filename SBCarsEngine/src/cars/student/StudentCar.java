@@ -7,6 +7,7 @@ import java.util.Random;
 
 import java.awt.*;
 
+import static cars.engine.Vector2.byAngle;
 import static cars.engine.Vector2.vec2;
 
 public class StudentCar extends Car {
@@ -25,6 +26,7 @@ public class StudentCar extends Car {
     double distance;
     double Sx = getPosition().x;
     double Sy = getPosition().y;
+    double wanderAngle = 0;
 
     public Vector2 RandomCoordinates() {
 
@@ -155,6 +157,32 @@ public class StudentCar extends Car {
             return vec2();
         }
     }
+
+    public Vector2 wander2(final World world, double weight){
+        Sx = getPosition().x;
+        Sy = getPosition().y;
+        Vector2 Sf = RandomCoordinates();
+        Vector2 circleCenter = getVelocity().normalize().multiply(16);
+        Random random = new Random();
+        wanderAngle += (random.nextFloat() - 0.5f) * 0.6;
+        System.out.println(wanderAngle);
+
+        Vector2 displacement = byAngle(wanderAngle).multiply(8);
+
+        Sf = getPosition().add(circleCenter).add(displacement);
+
+        if (Sf != null) {
+            Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
+            acel.x *= -1;
+            acel.y *=-1;
+            Vector2 finalVector = Vector2.multiply(acel, weight);
+            return finalVector;
+        }
+        else {
+            return vec2();
+        }
+    }
+
     public Vector2 avoid(final World world, double weight, double mult){
 
         Sx = getPosition().x;
@@ -209,7 +237,7 @@ public class StudentCar extends Car {
 
     }
 
-    int state = 5;
+    int state = 3;
     @Override
     public Vector2 calculateSteering(final World world) {
 
@@ -221,7 +249,7 @@ public class StudentCar extends Car {
                 return arrive(world, 1);
 
             case 3:
-                return wander(world,1);
+                return wander2(world,1);
             case 4:
                 return flee(world,1);
             case 5:
