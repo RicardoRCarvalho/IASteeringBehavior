@@ -164,10 +164,10 @@ public class StudentCar extends Car {
         Vector2 Sf = RandomCoordinates();
         Vector2 circleCenter = getVelocity().normalize().multiply(16);
         Random random = new Random();
-        wanderAngle += (random.nextFloat() - 0.5f) * 0.6;
+        wanderAngle += (random.nextFloat() - 0.5f) * 0.8;
         System.out.println(wanderAngle);
 
-        Vector2 displacement = byAngle(wanderAngle).multiply(8);
+        Vector2 displacement = byAngle(wanderAngle).multiply(30);
 
         Sf = getPosition().add(circleCenter).add(displacement);
 
@@ -237,7 +237,7 @@ public class StudentCar extends Car {
 
     }
 
-    int state = 3;
+    int state = 2;
     @Override
     public Vector2 calculateSteering(final World world) {
 
