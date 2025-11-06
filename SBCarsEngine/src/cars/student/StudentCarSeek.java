@@ -177,7 +177,7 @@ public class StudentCarSeek extends Car {
 
     public Vector2 SeekAvoidArrive(final World world)
     {
-        double closestDistance;
+
 
         Sx = getPosition().x;
         Sy = getPosition().y;
@@ -195,20 +195,23 @@ public class StudentCarSeek extends Car {
             double obstacleDistance = (double) Math.sqrt(obstacleDistancex * obstacleDistancex + obstacleDistancey * obstacleDistancey);
             if (!distanceSetUp){
                 StartDistance=distance;
+
                 distanceSetUp=true;
             }
+            if (distance < 30.0f) {
 
-            if (distance<= StartDistance/1.5){
-                System.out.println("arrive");
-                StartDistance = distance;
-                return new Vector2(getDirection().x*-getSpeed()*(distance/100),getDirection().y*-getSpeed()*(distance/100));
-            }
-            if (distance < 10.0f) {
 
-                distanceSetUp=false;
                 return null;
 
             }
+
+/*
+            if (distance<= StartDistance/2){
+                System.out.println("arrive");
+
+                return new Vector2(getDirection().x*-getSpeed()*(distance/100),getDirection().y*-getSpeed()*(distance/100));
+            }
+*/
             Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
             acel.x *= -1;
             acel.y *=-1;
@@ -219,7 +222,34 @@ public class StudentCarSeek extends Car {
                 return finalVector;
             }
             else {
-                Vector2 finalVector = Vector2.multiply(acel, 1);
+                double percentDeDistancia = (distance/StartDistance);
+                Vector2 finalVector = Vector2.multiply(acel, 2);
+                if (percentDeDistancia>1){
+                    StartDistance = distance;
+
+                }
+
+
+
+                    if (percentDeDistancia<0.4){
+
+                        Vector2 breaks = Vector2.multiply(getDirection(),-1);
+                        breaks = Vector2.multiply(breaks,1-percentDeDistancia);
+                        System.out.println(1-percentDeDistancia);
+                        breaks = Vector2.multiply(breaks,2);
+                        finalVector = Vector2.add(finalVector,breaks);
+
+
+                        //finalVector = Vector2.add(finalVector,breaks);
+
+
+
+
+                        return finalVector;
+                    }
+
+
+
                 return finalVector;
             }
 
