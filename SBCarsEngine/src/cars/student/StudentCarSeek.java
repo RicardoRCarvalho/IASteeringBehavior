@@ -216,7 +216,7 @@ public class StudentCarSeek extends Car {
             acel.x *= -1;
             acel.y *=-1;
             if (obstacleDistance < 100){
-                dodge = Vector2.multiply(dodge,500);
+                dodge = Vector2.multiply(dodge,100);
                 dodge = Vector2.add(dodge,acel);
                 Vector2 finalVector = Vector2.multiply(dodge, 1);
                 return finalVector;
@@ -231,16 +231,19 @@ public class StudentCarSeek extends Car {
 
 
 
-                    if (percentDeDistancia<0.4){
-
+                    if (percentDeDistancia<0.5){
+/*
                         Vector2 breaks = Vector2.multiply(getDirection(),-1);
                         breaks = Vector2.multiply(breaks,1-percentDeDistancia);
                         System.out.println(1-percentDeDistancia);
                         breaks = Vector2.multiply(breaks,2);
                         finalVector = Vector2.add(finalVector,breaks);
+*/
 
-
-                        //finalVector = Vector2.add(finalVector,breaks);
+                        Vector2 breaks = Vector2.multiply(getDirection(),-1);
+                        breaks = Vector2.multiply(breaks,getSpeed());
+                        finalVector = Vector2.multiply(finalVector,1);
+                        finalVector = Vector2.add(finalVector,breaks);
 
 
 
