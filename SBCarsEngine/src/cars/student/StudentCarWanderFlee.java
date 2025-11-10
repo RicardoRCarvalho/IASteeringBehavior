@@ -121,7 +121,7 @@ public class StudentCarWanderFlee extends Car {
         Vector2 fleeVector = flee(world, 100);
 
         Vector2 movement = Vector2.add(wanderVector, fleeVector);
-        System.out.println("Seek:  " + wanderVector + "\nFlee: " + fleeVector + "\nTotal: " + movement);
+       // System.out.println("Seek:  " + wanderVector + "\nFlee: " + fleeVector + "\nTotal: " + movement);
         return movement;
     }
 }

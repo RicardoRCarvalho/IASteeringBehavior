@@ -16,15 +16,15 @@ public class StudentCarPathFinding extends Car {
                 settings
                         .color(Color.YELLOW)
                         .randomOrientation()
-                        .position(-300, -200)
-                        .maxSpeed(150)
+                        .position(-400, 0)
+                        .maxSpeed(100)
                         .maxForce(500)
 
         );
 
     }
 
-    java.util.List<Vector2> waypoints = Arrays.asList(new Vector2(-200, -150), new Vector2(200, -150),new Vector2(-200, 200), new Vector2(200, 200));
+    java.util.List<Vector2> waypoints = Arrays.asList(new Vector2(0, -300), new Vector2(400, 0),new Vector2(0, 300), new Vector2(-300, 0));
     int currentWaypoint = 0;
 
     public Vector2 pathFollowing(double weight){

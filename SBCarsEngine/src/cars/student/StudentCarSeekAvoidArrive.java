@@ -199,8 +199,8 @@ public class StudentCarSeekAvoidArrive extends Car {
 
         Vector2 movement = Vector2.add(seekVector, arriveVector);
         Vector2 finalVector = Vector2.add(movement, avoidVector);
-        System.out.println("Seek:  " + seekVector + "\nArrive: " + arriveVector + "\nAvoid: " + avoidVector + "\nTotal: " + finalVector);
-        System.out.println(finalVector.size());
+       // System.out.println("Seek:  " + seekVector + "\nArrive: " + arriveVector + "\nAvoid: " + avoidVector + "\nTotal: " + finalVector);
+       // System.out.println(finalVector.size());
         if(finalVector.isZero()) {
             return null;
         }
