@@ -4,11 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c81efad-2b09-4096-9463-f46f5d70a2ba" name="Changes" comment="" />
+    <list default="true" id="0c81efad-2b09-4096-9463-f46f5d70a2ba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/ObstacleCar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarPathFinding.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarWanderFlee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/engine/Car.class" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/engine/Car.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/Setup.class" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/Setup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarFlee.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarSeek.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/engine/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/engine/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/Setup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarFlee.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarSeek.java" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarSeekAvoidArrive.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -30,13 +50,18 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/loboz/OneDrive/Documentos/PFatuch/IASteeringBehavior",
+    "last_opened_file_path": "C:/Users/Ricka/Documents/GitHub/IASteeringBehavior",
     "onboarding.tips.debug.path": "C:/Users/ricardo.carvalho2.GRUPOMARISTA/Documents/GitHub/IASteeringBehavior/untitled/src/Main.java",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cars.student" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Window" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-25" />
@@ -64,6 +89,13 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

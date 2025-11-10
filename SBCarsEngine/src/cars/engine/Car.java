@@ -78,6 +78,7 @@ public abstract class Car implements Cloneable {
 
         g2.dispose();
 
+
         // Debug vectors in WORLD space (no rotation)
         if (debug) {
             drawDebugArrows(g);

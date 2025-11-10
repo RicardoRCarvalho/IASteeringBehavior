@@ -8,21 +8,16 @@ import java.awt.*;
 
 import static cars.engine.Vector2.vec2;
 
-public class StudentCarSeek extends Car {
-    public StudentCarSeek() {
+public class StudentCarSeekAvoidArrive extends Car {
+    public StudentCarSeekAvoidArrive() {
         super(settings ->
           settings
             .color(Color.RED)
             .randomOrientation()
+            .maxSpeed(200)
         );
     }
 
-    boolean EnteredSeek = false;
-    boolean distanceSetUp = false;
-    double StartDistance;
-    double distance;
-    double Sx = getPosition().x;
-    double Sy = getPosition().y;
     Vector2 Sf;
 
 
@@ -45,38 +40,13 @@ public class StudentCarSeek extends Car {
      */
 
     public Vector2 seek(final World world, double weight){
-        System.out.println("seek");
-        Sx = getPosition().x;
-        Sy = getPosition().y;
-        if (EnteredSeek){
-            StartDistance=distance;
-            EnteredSeek=false;
-        }
-
-        Vector2 Sf = world.getClickPos();
+        Sf = world.getClickPos();
 
         if (Sf != null) {
-            double dx = Sf.x - Sx;
-            double dy = Sf.y - Sy;
-            distance = (double) Math.sqrt(dx * dx + dy * dy);
-            if (!distanceSetUp){
-                StartDistance=distance;
-                distanceSetUp=true;
-            }
+            Vector2 direction = Vector2.subtract(Sf, getPosition()).normalize();
 
-            if (distance<= StartDistance/2){
-                state =2;
-            }
-            if (distance < 10.0f) {
+            Vector2 finalVector = Vector2.multiply(direction, weight);
 
-                distanceSetUp=false;
-                return null;
-
-            }
-            Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
-            acel.x *= -1;
-            acel.y *=-1;
-            Vector2 finalVector = Vector2.multiply(acel, weight);
             return finalVector;
         }
         else {
@@ -84,98 +54,55 @@ public class StudentCarSeek extends Car {
         }
     }
     public Vector2 arrive(final World world, double weight) {
-        System.out.println("arrive");
-        Sx = getPosition().x;
-        Sy = getPosition().y;
-        Vector2 Sf = world.getClickPos();
-        EnteredSeek=true;
-
-        if (Sf != null) {
-            //System.out.println(world.getClickPos());
-            //System.out.println("SF"+Sf);
-            double dx = Sf.x - Sx;
-            double dy = Sf.y - Sy;
-            distance = (double) Math.sqrt(dx * dx + dy * dy);
-
-            Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
-
-            if (StartDistance!=distance){
-                state = 5;
-            }
-
-            if (world.getClickPos() != Sf){
-
-                //System.out.println("Change");
-            }
-            if (distance<= StartDistance/10 ) {
-
-                return null;
-
-            }
+        Sf = world.getClickPos();
 
 
-            return new Vector2(getDirection().x*-getSpeed()*(distance/100),getDirection().y*-getSpeed()*(distance/100));
 
+        if(Sf != null) {
+            Vector2 direction = Vector2.subtract(Sf, getPosition());
+            double distance = Vector2.distance(getPosition(), Sf);
+            //System.out.println(distance);
 
-        } else {
-            return new Vector2(0, 0);
-        }
-    }
-    public Vector2 avoid(final World world, double weight, double mult){
-        System.out.println("avoid");
-        Sx = getPosition().x;
-        Sy = getPosition().y;
-        Vector2 obstaclePosition = new Vector2(100,100);
-        Vector2 dodge;
-
-        Vector2 Sf = world.getClickPos();
-
-        if (Sf != null) {
-
-            Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
-
-            double dx = Sf.x - Sx;
-            double dy = Sf.y - Sy;
-            distance = (double) Math.sqrt(dx * dx + dy * dy);
-
-            dodge = new Vector2(Sx - obstaclePosition.x, Sy - obstaclePosition.y);
-            double obstacleDistancex = obstaclePosition.x - Sx;
-            double obstacleDistancey = obstaclePosition.y - Sy;
-            double obstacleDistance = (double) Math.sqrt(obstacleDistancex * obstacleDistancex + obstacleDistancey * obstacleDistancey);
-            //System.out.println(obstacleDistance);
-            if (distance <= 10) {
-                return null;
-            }
-            if (obstacleDistance <100){
-                dodge = Vector2.multiply(dodge,mult);
-                dodge = Vector2.add(dodge,acel);
-                Vector2 finalVector = Vector2.multiply(dodge, weight);
+            double desiredSpeed = 0.0;
+            if(distance < 0.1){
+                Vector2 force = seek(world, 60);
+                Vector2 finalVector = Vector2.negate(force);
                 return finalVector;
             }
-            if (!distanceSetUp){
-                StartDistance=distance;
-                distanceSetUp=true;
+
+            if (distance < 70) {
+                desiredSpeed = distance / 70;
+
+
+                Vector2 desiredVelocity = direction.normalize().multiply(desiredSpeed);
+                Vector2 force = desiredVelocity.subtract(getVelocity());
+
+                Vector2 finalVector = Vector2.multiply(force, weight);
+                return finalVector;
             }
 
-            if (distance<= StartDistance/1.5){
-                state =2;
-            }
+        }
 
+        return vec2(0.0, 0.0);
 
+    }
+    public Vector2 avoid(final World world, double weight){
+        Vector2 Sf = new Vector2(100, 100);
+        //System.out.println(Vector2.distance(Sf, getPosition()));
 
+        if (Vector2.distance(Sf, getPosition()) < 100) {
+            Vector2 direction = getPosition().subtract(Sf).normalize();
+            double pushbackForce = weight * (1.0 - (Vector2.distance(Sf, getPosition()) / 100));
+            Vector2 finalVector = Vector2.multiply(direction, pushbackForce);
 
-            acel.x *= -1;
-            acel.y *=-1;
-            Vector2 finalVector = Vector2.multiply(acel, weight);
             return finalVector;
         }
         else {
             return vec2();
         }
-
     }
 
-    public Vector2 SeekAvoidArrive(final World world)
+    /*public Vector2 SeekAvoidArrive(final World world)
     {
 
 
@@ -205,13 +132,13 @@ public class StudentCarSeek extends Car {
 
             }
 
-/*
+
             if (distance<= StartDistance/2){
                 System.out.println("arrive");
 
                 return new Vector2(getDirection().x*-getSpeed()*(distance/100),getDirection().y*-getSpeed()*(distance/100));
             }
-*/
+
             Vector2 acel = new Vector2(Sx - Sf.x, Sy - Sf.y);
             acel.x *= -1;
             acel.y *=-1;
@@ -232,13 +159,13 @@ public class StudentCarSeek extends Car {
 
 
                     if (percentDeDistancia<0.5){
-/*
+
                         Vector2 breaks = Vector2.multiply(getDirection(),-1);
                         breaks = Vector2.multiply(breaks,1-percentDeDistancia);
                         System.out.println(1-percentDeDistancia);
                         breaks = Vector2.multiply(breaks,2);
                         finalVector = Vector2.add(finalVector,breaks);
-*/
+
 
                         Vector2 breaks = Vector2.multiply(getDirection(),-1);
                         breaks = Vector2.multiply(breaks,getSpeed());
@@ -261,22 +188,22 @@ public class StudentCarSeek extends Car {
             return vec2();
         }
 
-    }
+    }*/
 
-    int state = 3;
     @Override
     public Vector2 calculateSteering(final World world) {
 
-        switch(state){
-            case 1:
-                return seek(world, 1);
-            case 2:
-                return arrive(world, 1);
-            case 3:
-                return SeekAvoidArrive(world);
-            case 5:
-                return avoid(world,1,500);
+        Vector2 seekVector = seek(world, 60);
+        Vector2 avoidVector = avoid(world, 300);
+        Vector2 arriveVector = arrive(world, 10);
+
+        Vector2 movement = Vector2.add(seekVector, arriveVector);
+        Vector2 finalVector = Vector2.add(movement, avoidVector);
+        System.out.println("Seek:  " + seekVector + "\nArrive: " + arriveVector + "\nAvoid: " + avoidVector + "\nTotal: " + finalVector);
+        System.out.println(finalVector.size());
+        if(finalVector.isZero()) {
+            return null;
         }
-        return null;
+        return finalVector;
     }
 }
