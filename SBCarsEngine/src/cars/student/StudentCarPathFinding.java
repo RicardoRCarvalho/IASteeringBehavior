@@ -17,7 +17,7 @@ public class StudentCarPathFinding extends Car {
                         .color(Color.YELLOW)
                         .randomOrientation()
                         .position(-400, 0)
-                        .maxSpeed(100)
+                        .maxSpeed(150)
                         .maxForce(500)
 
         );
@@ -48,7 +48,7 @@ public class StudentCarPathFinding extends Car {
     @Override
     public Vector2 calculateSteering(final World world) {
         System.out.println(currentWaypoint);
-        return pathFollowing(50);
+        return pathFollowing(100);
     }
 }
 

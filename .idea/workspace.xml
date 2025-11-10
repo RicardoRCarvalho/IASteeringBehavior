@@ -6,15 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0c81efad-2b09-4096-9463-f46f5d70a2ba" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/ObstacleCar.class" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/ObstacleCar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/Setup.class" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/Setup.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarPathFinding.class" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarPathFinding.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarSeekAvoidArrive.class" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarSeekAvoidArrive.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarWanderFlee.class" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/out/production/SBCarsEngine/cars/student/StudentCarWanderFlee.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/Setup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarPathFinding.java" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarPathFinding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarSeekAvoidArrive.java" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarSeekAvoidArrive.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarWanderFlee.java" beforeDir="false" afterPath="$PROJECT_DIR$/SBCarsEngine/src/cars/student/StudentCarWanderFlee.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
