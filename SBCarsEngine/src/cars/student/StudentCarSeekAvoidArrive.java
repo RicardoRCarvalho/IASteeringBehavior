@@ -193,7 +193,7 @@ public class StudentCarSeekAvoidArrive extends Car {
     @Override
     public Vector2 calculateSteering(final World world) {
 
-        Vector2 seekVector = seek(world, 60);
+        Vector2 seekVector = seek(world, 80);
         Vector2 avoidVector = avoid(world, 300);
         Vector2 arriveVector = arrive(world, 10);
 
