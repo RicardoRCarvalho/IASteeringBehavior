@@ -2,8 +2,12 @@ package cars.engine;
 
 import cars.student.Setup;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import java.util.List;
 
@@ -111,6 +115,7 @@ public final class Window extends JFrame implements Runnable {
         );
     }
 
+
     private void draw(Graphics2D g2d) {
         // Quality hints
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -120,8 +125,18 @@ public final class Window extends JFrame implements Runnable {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         // Clear
-        g2d.setBackground(new Color(220, 220, 220));
-        g2d.clearRect(0, 0, getWidth(), getHeight());
+
+        try
+        {
+            BufferedImage backgroundImage = ImageIO.read(new File("SBCarsEngine/src/cars/student/1.jpg"));
+            g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+        }
+        catch (IOException e){
+            g2d.setBackground(new Color(220, 220, 220));
+
+            g2d.clearRect(0, 0, getWidth(), getHeight());
+        }
+
 
         // Center the world origin
         g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
